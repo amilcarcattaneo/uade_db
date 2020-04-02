@@ -17,7 +17,7 @@ git pull origin master
 ```
 
 ## Agregar o Modificar Scripts
-La idea es crear un archivo **db.X.X.X.sql** dentro de la carpeta **db/** (siempre sumándole uno a la versión anterior). O si estás modificando un script actual, hacelo sin problema dentro del mismo archivo.
+Para agregar un script, la idea es crear un archivo **db.X.X.X.sql** dentro de la carpeta **db/** (siempre sumándole uno a la versión anterior). O si estás modificando un script actual, hacelo sin problema dentro del mismo archivo.
 
 * Una vez que ya tenemos nuestro cambios y estamos listos para subirlos a Github tenemos que hacer un commit con una descripción corta del por qué del cambio.
 
