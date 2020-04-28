@@ -3,7 +3,7 @@
 - Viernes 3 de Abril
 	- [X] **Modelo físico de la Base de Datos**
 - Lunes 20 de Abril
-	- [ ] **Algebra Relacional**
+	- [X] **Algebra Relacional**
 
 ---
 
