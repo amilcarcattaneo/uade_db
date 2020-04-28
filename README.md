@@ -2,9 +2,12 @@
 
 ## Entregas
 
-- Viernes 3 de Abril - [X] **Modelo físico de la Base de Datos**
-- Lunes 20 de Abril - [X] **Algebra Relacional**
-- Lunes 04 de Mayo - [ ] **TSQL**
+- Viernes 3 de Abril 
+  - [X] **Modelo físico de la Base de Datos**
+- Lunes 20 de Abril 
+  - [X] **Algebra Relacional**
+- Lunes 04 de Mayo 
+  - [ ] **TSQL**
 
 ---
 
