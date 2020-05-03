@@ -91,13 +91,33 @@ INSERT INTO PlanActivo (numeroPlan, numeroVuelo, fecha, numeroLugaresLibres, idA
 INSERT INTO PlanActivo (numeroPlan, numeroVuelo, fecha, numeroLugaresLibres, idAvion, idAeropuertoSalida, horaSalida, idAeropuertoLlegada, horaLlegada)
 		VALUES(4, 'IB846', '2020-02-01', 33, 2, 'AR-AIE', 164000, 'AR-AIG', 180000);
 INSERT INTO PlanActivo (numeroPlan, numeroVuelo, fecha, numeroLugaresLibres, idAvion, idAeropuertoSalida, horaSalida, idAeropuertoLlegada, horaLlegada)
-		VALUES(4, 'QA157', '2020-02-03', 0, 1, 'AR-AIE', 205500, 'IT-MMA', 092500);
+		VALUES(5, 'QA157', '2020-02-03', 0, 1, 'AR-AIE', 205500, 'IT-MMA', 092500);
 
 -- ---------------- --
---    PrecioBoleto   --
+--    PrecioBoleto  --
 -- ---------------- --
 
 INSERT INTO PrecioBoleto (idTarifa, numeroVuelo, cantidad) VALUES (12, 'AA065', 120);
 INSERT INTO PrecioBoleto (idTarifa, numeroVuelo, cantidad) VALUES (13, 'LU265', 417);
 INSERT INTO PrecioBoleto (idTarifa, numeroVuelo, cantidad) VALUES (14, 'IB846', 190);
 INSERT INTO PrecioBoleto (idTarifa, numeroVuelo, cantidad) VALUES (15, 'QA157', 467);
+
+-- --------------- --
+--    Aterrizaje   --
+-- --------------- --
+
+INSERT INTO Aterrizaje (nombreTipoAvion, idAeropuerto) VALUES ('Boeing 747', 'AR-AIE');
+INSERT INTO Aterrizaje (nombreTipoAvion, idAeropuerto) VALUES ('Airbus A320', 'AR-AIE');
+INSERT INTO Aterrizaje (nombreTipoAvion, idAeropuerto) VALUES ('Bombardier CRJ200', 'AR-AIE');
+INSERT INTO Aterrizaje (nombreTipoAvion, idAeropuerto) VALUES ('Túpolev Tu-204', 'AR-AIE');
+INSERT INTO Aterrizaje (nombreTipoAvion, idAeropuerto) VALUES ('Ilyushin Il-96', 'AR-AIE');
+
+-- ----------------- --
+--    ReservaLugar   --
+-- ----------------- --
+
+INSERT INTO ReservaLugar (numeroLugar, numeroVuelo, numeroPlan, fecha, nombreCliente, telefonoCliente) VALUES (30, 'AA065', 1, '01/02/2019', 'John Doe', 12345678);
+INSERT INTO ReservaLugar (numeroLugar, numeroVuelo, numeroPlan, fecha, nombreCliente, telefonoCliente) VALUES (41, 'AA065', 1, '02/03/2019', 'Jane Doe', 23456789);
+INSERT INTO ReservaLugar (numeroLugar, numeroVuelo, numeroPlan, fecha, nombreCliente, telefonoCliente) VALUES (52, 'QA157', 5, '03/04/2019', 'Juan Perez', 34567890);
+INSERT INTO ReservaLugar (numeroLugar, numeroVuelo, numeroPlan, fecha, nombreCliente, telefonoCliente) VALUES (63, 'QA157', 5, '04/05/2019', 'Carlos Garcia', 45678901);
+INSERT INTO ReservaLugar (numeroLugar, numeroVuelo, numeroPlan, fecha, nombreCliente, telefonoCliente) VALUES (74, 'QA157', 5, '05/06/2019', 'Sara Bareilles', 56789012);
