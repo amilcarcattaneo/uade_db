@@ -4,7 +4,7 @@ USE Entrega1;
 
 CREATE TABLE Aeropuerto
 (
-    idAeropuerto INT NOT NULL,
+    idAeropuerto VARCHAR(10) NOT NULL,
     nombre VARCHAR(50),
     ciudad VARCHAR(50),
     provincia VARCHAR(50),
@@ -15,7 +15,7 @@ CREATE TABLE Avion
 (
     idAvion INT NOT NULL, 
     numeroTotalLugares INT NOT NULL,
-    tipoAvion INT NOT NULL,
+    tipoAvion VARCHAR(50) NOT NULL,
 
     PRIMARY KEY (idAvion)
 );
@@ -31,7 +31,7 @@ CREATE TABLE TipoAvion
 
 CREATE TABLE Vuelo
 (
-    numeroVuelo INT NOT NULL,
+    numeroVuelo VARCHAR(10) NOT NULL,
     aerolinea VARCHAR(20),
     diasSemana VARCHAR(20),
 
@@ -41,11 +41,11 @@ CREATE TABLE Vuelo
 CREATE TABLE PlanVuelo
 (
     numeroPlan INT NOT NULL,
-    numeroVuelo INT NOT NULL,
-    idAeropuertoSalida INT NOT NULL, 
-    horaSalidaProgramada TIME NOT NULL,
-    idAeropuertoLlegada INT NOT NULL, 
-    horaLlegadaProgramada TIME NOT NULL,
+    numeroVuelo VARCHAR(10) NOT NULL,
+    idAeropuertoSalida VARCHAR(10) NOT NULL, 
+    horaSalidaProgramada INT NOT NULL,
+    idAeropuertoLlegada VARCHAR(10) NOT NULL, 
+    horaLlegadaProgramada INT NOT NULL,
     PRIMARY KEY (numeroPlan), 
     FOREIGN KEY (numeroVuelo) REFERENCES Vuelo(numeroVuelo), 
     FOREIGN KEY (idAeropuertoSalida) REFERENCES Aeropuerto(idAeropuerto),
@@ -55,7 +55,7 @@ CREATE TABLE PlanVuelo
 CREATE TABLE ReservaLugar
 (
     numeroLugar INT NOT NULL,
-    numeroVuelo INT NOT NULL,
+    numeroVuelo VARCHAR(10) NOT NULL,
     numeroPlan INT NOT NULL,
     fecha DATE,
     nombreCliente VARCHAR(50),
@@ -69,7 +69,7 @@ CREATE TABLE ReservaLugar
 CREATE TABLE Aterrizaje
 (
     nombreTipoAvion VARCHAR(30) NOT NULL,
-    idAeropuerto INT NOT NULL, 
+    idAeropuerto VARCHAR(10) NOT NULL, 
 
     PRIMARY KEY (nombreTipoAvion),
     FOREIGN KEY (nombreTipoAvion) REFERENCES TipoAvion(nombreTipoAvion), 
@@ -79,7 +79,7 @@ CREATE TABLE Aterrizaje
 CREATE TABLE PrecioBoleto
 (
     idTarifa FLOAT NOT NULL,
-    numeroVuelo INT NOT NULL, 
+    numeroVuelo VARCHAR(10) NOT NULL, 
     cantidad INT NOT NULL,
     restricciones VARCHAR(50),
 
@@ -90,15 +90,16 @@ CREATE TABLE PrecioBoleto
 CREATE TABLE PlanActivo
 (
     numeroPlan INT NOT NULL,
-    numeroVuelo INT NOT NULL,
+    numeroVuelo VARCHAR(10) NOT NULL,
     fecha DATE NOT NULL,
+    numeroLugaresLibres INT NOT NULL,
     idAvion INT NOT NULL, 
-    idAeropuertoSalida INT NOT NULL,
-    horaSalida TIME NOT NULL,
-    idAeropuertoLlegada INT NOT NULL,
-    horaLlegada TIME NOT NULL,
+    idAeropuertoSalida VARCHAR(10) NOT NULL,
+    horaSalida INT NOT NULL,
+    idAeropuertoLlegada VARCHAR(10) NOT NULL,
+    horaLlegada INT NOT NULL,
 
-    PRIMARY KEY (numeroPlan),
+    PRIMARY KEY (numeroPlan, numeroVuelo, fecha),
     FOREIGN KEY (numeroVuelo) REFERENCES Vuelo(numeroVuelo),
     FOREIGN KEY (idAvion) REFERENCES Avion(idAvion),
     FOREIGN KEY (idAeropuertoSalida) REFERENCES Aeropuerto(idAeropuerto),
