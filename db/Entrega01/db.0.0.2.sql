@@ -5,7 +5,7 @@ USE Entrega1;
 CREATE TABLE Aeropuerto
 (
     idAeropuerto VARCHAR(10) NOT NULL,
-    nombre VARCHAR(50),
+    nombre VARCHAR(80),
     ciudad VARCHAR(50),
     provincia VARCHAR(50),
     PRIMARY KEY (idAeropuerto)
