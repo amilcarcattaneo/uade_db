@@ -7,7 +7,7 @@
 - Lunes 20 de Abril 
   - [X] **Algebra Relacional**
 - Lunes 04 de Mayo 
-  - [ ] **TSQL**
+  - [X] **TSQL**
 
 ---
 
