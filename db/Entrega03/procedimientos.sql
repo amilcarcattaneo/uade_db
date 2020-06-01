@@ -2,11 +2,10 @@
 --  INSERTS  --
 -- --------- --
 
-INSERT INTO TurnoPaciente (idTurno, idPaciente, idMedico)
-		VALUES(3, 50, 2);
+--INSERT INTO TurnoPaciente (idTurno, idPaciente, idMedico) VALUES (3, 50, 2);
+--INSERT INTO Historia (idHistoria, fechaHistoria, observacion, fechaAlta) VALUES (1, GETDATE(), 50, 2);
+--INSERT INTO HistoriaPaciente (idHistoria, idPaciente, idMedico) VALUES (1, 50, 2);
 
-INSERT INTO HistoriaPaciente (idHistoria, idPaciente, idMedico) VALUES (1, 50, 2);
-INSERT INTO Historia (idHistoria, fechaHistoria, observacion, fechaAlta) VALUES (1, GETDATE(), 50, 2);
 
 
 -- --------------------------------- --
@@ -29,6 +28,49 @@ BEGIN
         RETURN
     END
 END
+GO
+
+-- --------------------- --
+-- Por Nombre y Apellido --
+-- --------------------- --
+CREATE PROCEDURE ConsultaTurnos
+@Nombre		varchar(50),
+@Apellido	varchar(50)
+as
+BEGIN
+	IF EXISTS (SELECT * FROM PACIENTE WHERE nombre=@NOMBRE AND apellido=@APELLIDO)
+	BEGIN
+		DECLARE @TURNO VARCHAR (50)
+		IF EXISTS(SELECT t.fechaTurno from TURNO T
+					JOIN TURNOPACIENTE TP ON T.idTurno=TP.idTurno
+					JOIN PACIENTE P ON TP.IDPACIENTE = P.IDPACIENTE
+					join TurnoEstado te on t.estado=te.idestado
+					WHERE P.nombre=@NOMBRE AND P.apellido=@APELLIDO)
+			SET @TURNO=(SELECT convert(varchar,t.fechaTurno,3) +' estado del turno: '+ te.descripcion from TURNO T
+					JOIN TURNOPACIENTE TP ON T.idTurno=TP.idTurno
+					JOIN PACIENTE P ON TP.IDPACIENTE = P.IDPACIENTE
+					join TurnoEstado te on t.estado=te.idestado
+					WHERE P.nombre=@NOMBRE AND P.apellido=@APELLIDO)
+		BEGIN
+			IF 
+			@TURNO IS NOT NULL 
+			BEGIN  
+			PRINT @TURNO
+			return
+			END
+			ELSE 
+			BEGIN
+			PRINT 'NO HAY TURNOS'
+			END
+		END
+	END
+	ELSE
+	BEGIN
+		PRINT 'NO EXISTE PACIENTE'
+		RETURN
+	END
+END
+GO
 
 -- --------------------------------------- --
 -- Obtener historia clínica de un paciente --
@@ -49,6 +91,7 @@ BEGIN
         RETURN
     END
 END
+GO
 
 -- ---------------------- --
 -- Actualizar un turno --
@@ -73,6 +116,7 @@ BEGIN
 		RETURN
 	END
 END
+GO
 
 -- ---------------------- --
 -- Actualizar un paciente --
@@ -102,6 +146,7 @@ BEGIN
 		RETURN
 	END
 END
+GO
 
 -- ----------------- --
 -- Eliminar un turno --
@@ -124,3 +169,4 @@ BEGIN
         RETURN
     END
 END
+GO
