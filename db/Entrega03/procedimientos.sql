@@ -12,7 +12,7 @@
 -- Obtener los turnos de un paciente --
 -- --------------------------------- --
 
-CREATE PROCEDURE obtenerTurnosPaciente
+CREATE PROCEDURE ObtenerTurnosPaciente
 @idPaciente INT
 AS
 BEGIN
@@ -76,7 +76,7 @@ GO
 -- Obtener historia clínica de un paciente --
 -- --------------------------------------- --
 
-CREATE PROCEDURE obtenerHistoriaClinica
+CREATE PROCEDURE ObtenerHistoriaClinica
 @idPaciente INT
 AS
 BEGIN
@@ -97,7 +97,7 @@ GO
 -- Actualizar un turno --
 -- ---------------------- --
 
-CREATE PROCEDURE actualizarTurno
+CREATE PROCEDURE ActualizarTurno
 			@idTurno	    INT,
 			@fechaTurno		DATETIME,
 			@estado			INT,
@@ -122,7 +122,7 @@ GO
 -- Actualizar un paciente --
 -- ---------------------- --
 
-CREATE PROCEDURE actualizarPaciente
+CREATE PROCEDURE ActualizarPaciente
 			@idPaciente		INT,
 			@nombre			VARCHAR(50),
 			@apellido		VARCHAR(50),
@@ -152,7 +152,7 @@ GO
 -- Eliminar un turno --
 -- ----------------- --
 
-CREATE PROCEDURE eliminarTurno
+CREATE PROCEDURE EliminarTurno
 @idTurno INT
 AS
 BEGIN
@@ -168,5 +168,51 @@ BEGIN
         PRINT 'El turno se eliminó correctamente.'
         RETURN
     END
+END
+GO
+
+-- ------------------- --
+-- Transferir un turno --
+-- ------------------- --
+
+CREATE PROCEDURE TransferirTurno
+@idPacienteTurno	int,
+@idPacienteNuevo	int,
+@FechaTurno			VARCHAR(10)
+as
+BEGIN
+	IF EXISTS (SELECT * FROM PACIENTE WHERE idpaciente=@idPacienteTurno)
+	BEGIN
+		DECLARE @TURNOREEMPLAZO INT
+		IF EXISTS(SELECT TE.idTurno from TURNOPACIENTE TE
+					JOIN TURNO T ON TE.idTurno = T.idTurno 
+					WHERE TE.idPaciente=@idPacienteTurno AND CONVERT(VARCHAR,T.fechaTurno,103)=@FechaTurno AND T.ESTADO!=1)
+			BEGIN
+				SET @TURNOREEMPLAZO=(SELECT TE.idTurno from TURNOPACIENTE TE
+					JOIN TURNO T ON TE.idTurno = T.idTurno 
+					WHERE TE.idPaciente=@idPacienteTurno AND CONVERT(VARCHAR,T.fechaTurno,103)=@FechaTurno AND T.ESTADO!=1)
+				IF EXISTS (SELECT * FROM PACIENTE WHERE IDPACIENTE=@idPacienteNuevo)
+				BEGIN  
+					UPDATE TURNOPACIENTE SET idPaciente=@idPacienteNuevo
+					WHERE IDTURNO=@TURNOREEMPLAZO
+					PRINT 'TURNO REEMPLAZADO'
+					return
+				END
+				ELSE 
+				BEGIN
+				PRINT 'NO EXISTE PACIENTE '+ CONVERT(VARCHAR(3),@IDPACIENTENUEVO)
+				END
+			END
+			ELSE 
+			BEGIN
+				PRINT 'NO HAY TURNOS PARA PACIENTE '+ CONVERT(VARCHAR(3),@IDPACIENTETURNO)
+				RETURN
+			END
+	END
+	ELSE
+	BEGIN
+		PRINT 'NO EXISTE PACIENTE '+ CONVERT(VARCHAR(3),@IDPACIENTETURNO)
+		RETURN
+	END
 END
 GO
